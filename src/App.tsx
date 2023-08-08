@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import "./App.css";
 import { typeData } from "./types/typeData";
-import myApiKey from "./components/apiKey";
+import myApiKey from "./apiKey";
 import Elements from "./components/Elements";
 import Search from "./components/Search";
 import ErroMessage from "./components/ErrorMessage";
