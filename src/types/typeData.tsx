@@ -13,3 +13,7 @@ export type SearchProps = {
   fetchData: (inputValue: string) => Promise<void>;
   inputRef: React.RefObject<HTMLInputElement>;
 };
+
+export type MessageError = {
+  errorMessage: string | boolean;
+};

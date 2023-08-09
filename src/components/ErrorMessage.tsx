@@ -1,11 +1,11 @@
-const ErroMessage = () => {
+import { MessageError } from "../types/typeData";
+
+const ErrorMessage = ({ errorMessage }: MessageError) => {
   return (
     <div className="error-message border-t-2 border-solid border-[#fff] mt-5 pt-4 text-center">
-      <p className="text-justify">
-        Não foi possível encontrar o clima de uma cidade com este nome.
-      </p>
+      <p className="text-justify">{errorMessage}</p>
     </div>
   );
 };
 
-export default ErroMessage;
+export default ErrorMessage;

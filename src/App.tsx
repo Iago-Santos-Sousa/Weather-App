@@ -4,17 +4,25 @@ import { typeData } from "./types/typeData";
 import myApiKey from "./apiKey";
 import Elements from "./components/Elements";
 import Search from "./components/Search";
-import ErroMessage from "./components/ErrorMessage";
+import ErrorMessage from "./components/ErrorMessage";
 import SpinnerLoading from "./components/SpinnerLoading";
-import Tooltip from "./components/Tooltip";
 
 function App() {
   const [apiData, setApiData] = useState<typeData | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
-  const [error, setError] = useState<boolean | null>(null);
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const fetchData = async (inputValue: string): Promise<void> => {
+    if (inputValue.trim() === "") {
+      setLoader(false);
+      setError(true);
+      setErrorMessage("Insira um nome de uma cidade...");
+      setApiData(null);
+      console.log(apiData);
+      return;
+    }
     setLoader(true);
 
     try {
@@ -40,12 +48,13 @@ function App() {
         speed,
       };
       setApiData(allData);
-      setError(null);
+      setError(false);
       setLoader(false);
       inputRef.current?.focus();
       inputRef.current && (inputRef.current.value = ""); // Limpar o valor do input
     } catch (error) {
       setError(true);
+      setErrorMessage("Não foi possível achar a cidade com esse nome...");
       setApiData(null);
       setLoader(false);
       console.log("Erro", error);
@@ -65,10 +74,10 @@ function App() {
           description={apiData.description}
           icon={apiData.icon}
           speed={apiData.speed}
+          errorMessage={errorMessage}
         />
       )}
-      {error && <ErroMessage />}
-      <Tooltip />
+      {error && <ErrorMessage errorMessage={errorMessage} />}
     </div>
   );
 }
