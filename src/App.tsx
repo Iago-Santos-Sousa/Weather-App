@@ -10,19 +10,19 @@ import SpinnerLoading from "./components/SpinnerLoading";
 function App() {
   const [apiData, setApiData] = useState<typeData | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const fetchData = async (inputValue: string): Promise<void> => {
-    console.log(inputValue);
-    if (inputValue.trim() === "") {
-      console.log(inputValue);
-      setLoader(false);
-      setError(true);
-      setErrorMessage("Insira um nome de uma cidade...");
+  const fetchData = async (inputValue: string | null): Promise<void> => {
+    // console.log(inputValue);
+    // console.log(apiData);
+    if (inputValue === "") {
+      inputValue = null;
       setApiData(null);
-      console.log(apiData);
+      console.log("input esta vazio");
+      console.log(inputRef.current?.value);
+      setLoader(false);
+      setErrorMessage("Insira um nome de uma cidade...");
       return;
     }
     setLoader(true);
@@ -50,13 +50,15 @@ function App() {
         speed,
       };
       setApiData(allData);
-      setError(false);
+      setErrorMessage(false);
       setLoader(false);
       inputRef.current?.focus();
-      inputRef.current && (inputRef.current.value = ""); // Limpar o valor do input
+      //inputRef.current && (inputRef.current.value = ""); // Limpar o valor do input
+      inputValue = null;
     } catch (error) {
-      setError(true);
       setErrorMessage("Não foi possível achar a cidade com esse nome...");
+      inputValue = null;
+      inputRef.current && (inputRef.current.value = "");
       setApiData(null);
       setLoader(false);
       console.log("Erro", error);
@@ -76,9 +78,10 @@ function App() {
           description={apiData.description}
           icon={apiData.icon}
           speed={apiData.speed}
+          errorMessage={errorMessage}
         />
       )}
-      {error && <ErrorMessage errorMessage={errorMessage} />}
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
     </div>
   );
 }

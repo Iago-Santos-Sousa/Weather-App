@@ -21,10 +21,12 @@ const Search = ({ fetchData, inputRef }: SearchProps): JSX.Element => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputValue(e.target.value)
           }
-          onKeyDown={(e) => (e.key === "Enter" ? fetchData(inputValue) : null)}
+          onKeyDown={(e) =>
+            e.key === "Enter" ? fetchData(inputValue && inputValue) : null
+          }
         />
         <button
-          onClick={() => fetchData(inputValue)}
+          onClick={() => fetchData(inputValue && inputValue)}
           className="p-2 min-w-[50px] ml-2 bg-[#78da88] text-[#fff] border-none cursor-pointer rounded flex justify-center items-center"
           id="search"
         >

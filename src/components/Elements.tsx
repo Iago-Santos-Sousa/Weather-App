@@ -1,4 +1,4 @@
-import { typeData } from "../types/typeData";
+import { MessageError, typeData } from "../types/typeData";
 import { TfiLocationPin } from "react-icons/tfi";
 import { WiHumidity } from "react-icons/wi";
 import { FiWind } from "react-icons/fi";
@@ -11,9 +11,11 @@ const Elements = ({
   description,
   icon,
   speed,
-}: typeData): JSX.Element => {
+  errorMessage,
+}: typeData & MessageError): JSX.Element => {
   return (
     <div className="weather-data flex flex-col gap-4 border-solid border-t-2 border-[#fff] mt-6 text-center">
+      {errorMessage && <p>{errorMessage}</p>}
       <h2 className="flex justify-center items-center mb-1 mt-4 gap-2">
         <span className="text-xl font-extrabold">
           <TfiLocationPin />
