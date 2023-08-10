@@ -15,7 +15,9 @@ function App() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const fetchData = async (inputValue: string): Promise<void> => {
+    console.log(inputValue);
     if (inputValue.trim() === "") {
+      console.log(inputValue);
       setLoader(false);
       setError(true);
       setErrorMessage("Insira um nome de uma cidade...");
@@ -74,7 +76,6 @@ function App() {
           description={apiData.description}
           icon={apiData.icon}
           speed={apiData.speed}
-          errorMessage={errorMessage}
         />
       )}
       {error && <ErrorMessage errorMessage={errorMessage} />}
